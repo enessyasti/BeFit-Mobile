@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeFit.Views.SessionDetailPage"
+             Title="Szczegóły Treningu">
+    <Grid RowDefinitions="Auto, *">
+        <VerticalStackLayout Grid.Row="0" Padding="10" Spacing="10">
+            <Label Text="Wybierz ćwiczenie" FontAttributes="Bold"/>
+            <Picker ItemsSource="{Binding AvailableExercises}" ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedExercise}" Title="Lista ćwiczeń"/>
+
+            <Grid ColumnDefinitions="*,*,*">
+                <VerticalStackLayout Grid.Column="0">
+                    <Label Text="Obciążenie (kg)"/>
+                    <Entry Text="{Binding Load}" Keyboard="Numeric"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="Serie"/>
+                    <Entry Text="{Binding Sets}" Keyboard="Numeric"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2">
+                    <Label Text="Powtórzenia"/>
+                    <Entry Text="{Binding Reps}" Keyboard="Numeric"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Button Text="Dodaj do Sesji" Command="{Binding AddExerciseCommand}"/>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding SessionExercises}" Margin="10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5" BackgroundColor="#F0F0F0">
+                        <Label>
+                            <Label.Text>
+                                <MultiBinding StringFormat="ID Ćwiczenia: {0} | {1}kg x {2} serie x {3} powt.">
+                                    <Binding Path="ExerciseTypeId"/>
+                                    <Binding Path="LoadKg"/>
+                                    <Binding Path="Sets"/>
+                                    <Binding Path="Repetitions"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
